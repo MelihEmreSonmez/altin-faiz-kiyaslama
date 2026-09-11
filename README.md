@@ -1,34 +1,51 @@
-# surekli_faiz_hesaplama
-Kurulum ve Çalıştırma Rehberi (Windows)
+# Gold vs. Interest — Investment Modeling Tools
 
-Projeyi bilgisayarınıza indirdikten sonra şu adımları izleyin:
+Two Streamlit apps that model investment returns, built while studying Mathematics Engineering at Istanbul Technical University.
 
+## 1. Historical comparison — `altin_vs_faiz.py`
 
-1. Terminali Doğru Klasörde Açın
+Answers a concrete question: if you had invested in gold instead of a deposit account, where would you be today?
 
-i.  İndirdiğiniz proje klasörünün içine girin.
-ii.  Dosya gezgininin en üstündeki **adres çubuğuna** tıklayın.
-iii.  Buraya `cmd` yazın ve **Enter** tuşuna basın.
-*(Bu işlem, siyah komut ekranını direkt o klasörün içinde açar.)*
+The app pulls real historical prices from Yahoo Finance — gold futures (`GC=F`) and USD/TRY (`TRY=X`) — and derives the gram gold price in Turkish lira. It then runs a day-by-day simulation of two portfolios side by side:
 
+- **Gold:** the initial capital buys grams at the starting price; every month a fixed amount buys more grams at that day's price.
+- **Deposit:** the same cash flows grow at a daily compounded rate derived from the annual interest rate you set.
 
-2. Gerekli Kütüphaneleri Yükleyin
+Both are plotted against the total cash actually invested, so the return is separated from the contributions.
 
-Açılan siyah ekrana şu komutu yapıştırıp Enter'a basın:
+**Inputs:** date range, initial capital, monthly contribution, average annual deposit rate.
+
+## 2. Continuous compound interest — `surekli_bilesik_faiz_hesaplamasi.py`
+
+Models an investment under continuous compounding with a steady cash flow, described by the differential equation
+
+```
+dS/dt = rS + k
+```
+
+The app uses the analytical solution
+
+```
+S(t) = S₀·e^(rt) + (k/r)·(e^(rt) − 1)
+```
+
+and handles the `r = 0` case separately, where the balance grows linearly. Rates and cash flows can be entered on a monthly or annual basis; the app converts between them and shows both.
+
+**Inputs:** initial capital, interest rate, cash flow, term.
+
+## Running locally
+
 ```bash
 pip install -r requirements.txt
+streamlit run altin_vs_faiz.py
+```
 
+Replace the filename to run the other app.
 
-3. Uygulamayı başlatın
+## Built with
 
-Terminale şu kodu yazın : 
+Python · Streamlit · yfinance · pandas · NumPy · Matplotlib
 
-i. cd C:\Users\Adınız\Desktop\Finansal_Simulasyon   ( bunun gibi dosyanın bulunduğu klasörü açınız )
+## Notes
 
-ii. Kodun bulunduğu dosya ismiyle streamlit run dosya_ismi.py yazınız ve enter a tıklayınız. 
-Örnek : 
-streamlit run difproje_2.py
-veya
-streamlit run difprojesi.py 
-
-
+The historical app depends on Yahoo Finance being reachable; if the expected tickers don't come back, it reports the problem instead of failing silently. Gram gold is derived from the ounce price and the exchange rate rather than read directly, so it approximates the local market price without spreads or premiums.
