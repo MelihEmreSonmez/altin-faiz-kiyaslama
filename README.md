@@ -2,7 +2,11 @@
 
 Two Streamlit apps that model investment returns, built while studying Mathematics Engineering at Istanbul Technical University.
 
+**Live demos:** [Gold vs. deposit interest](https://altin-faiz-kiyaslama-eew6qjzabgbehrjjer4msi.streamlit.app/) · [Continuous compound interest](https://altin-faiz-kiyaslama-7csux5zjkw9sbehrkq6sve.streamlit.app/)
+
 ## 1. Historical comparison — `altin_vs_faiz.py`
+
+[Open the app](https://altin-faiz-kiyaslama-eew6qjzabgbehrjjer4msi.streamlit.app/)
 
 Answers a concrete question: if you had invested in gold instead of a deposit account, where would you be today?
 
@@ -16,6 +20,8 @@ Both are plotted against the total cash actually invested, so the return is sepa
 **Inputs:** date range, initial capital, monthly contribution, average annual deposit rate.
 
 ## 2. Continuous compound interest — `surekli_bilesik_faiz_hesaplamasi.py`
+
+[Open the app](https://altin-faiz-kiyaslama-7csux5zjkw9sbehrkq6sve.streamlit.app/)
 
 Models an investment under continuous compounding with a steady cash flow, described by the differential equation
 
@@ -47,5 +53,7 @@ Replace the filename to run the other app.
 Python · Streamlit · yfinance · pandas · NumPy · Matplotlib
 
 ## Notes
+
+Both apps are hosted on Streamlit Community Cloud, which puts them to sleep after a period of inactivity — the first visit may take a few seconds to wake.
 
 The historical app depends on Yahoo Finance being reachable; if the expected tickers don't come back, it reports the problem instead of failing silently. Gram gold is derived from the ounce price and the exchange rate rather than read directly, so it approximates the local market price without spreads or premiums.
